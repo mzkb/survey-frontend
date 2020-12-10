@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card my-5">
+      <div class="card-body" *ngIf="survey">
+        <h2 class="card-title py-3">Survey Details</h2>
+        <form (ngSubmit)="onSubmit()" #createSurveyForm="ngForm">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" [(ngModel)]="survey.title"
+                   class="form-control"
+                   id="title"
+                   name="title"
+                   placeholder="Enter a title"
+                   required #name="ngModel">
+          </div>
+          <div [hidden]="!name.pristine" class="alert alert-danger">Title is required</div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea type="text" [(ngModel)]="survey.description"
+                      class="form-control"
+                      id="description"
+                      name="description"
+                      placeholder="Enter a description">
+            </textarea>
+          </div>
+          <button type="submit" [disabled]="!createSurveyForm.form.valid" class="btn btn-info">Update Survey</button>
+        </form>
+      </div>
+    </div>
+    <div class="card my-5">
+      <div class="card-body">
+        <h2 class="card-title text-center py-3">Add Question</h2>
+        <form >
+          <div class="form-group">
+            <label for="question-type">Type</label>
+            <select id="question-type" name="questionType" class="form-control">
+              <option>Boolean</option>
+              <option>Dropdown</option>
+              <option>Checkbox</option>
+              <option>Multiple Choice</option>
+              <option>Short Answer</option>
+              <option>Long Answer</option>
+              <option>Date</option>
+              <option>Time</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-info">Add</button>
+        </form>
+      </div>
+    </div>
+    <div class="card my-5" *ngFor="let question of questions; let i = index">
+      <div class="card-body">
+        <form >
+          <div class="form-group">
+
+          </div>
+          <button type="submit" class="btn btn-info">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
