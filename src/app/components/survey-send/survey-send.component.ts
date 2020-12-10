@@ -5,8 +5,7 @@ import {SurveySend} from "../../models/survey-send";
 
 @Component({
   selector: 'app-survey-send',
-  templateUrl: './survey-send.component.html',
-  styleUrls: ['./survey-send.component.css']
+  templateUrl: './survey-send.component.html'
 })
 export class SurveySendComponent implements OnInit {
 

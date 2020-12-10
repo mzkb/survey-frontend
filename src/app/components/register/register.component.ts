@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {PublisherRegistration} from "../publisher-registration";
+import {PublisherRegistration} from "../../models/publisher-registration";
 import {ActivatedRoute, Router} from "@angular/router";
-import {PublisherService} from "../publisher.service";
+import {PublisherService} from "../../services/publisher.service";
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  templateUrl: './register.component.html'
 })
 export class RegisterComponent implements OnInit {
 

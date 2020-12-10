@@ -1,4 +1,4 @@
 export class SurveyCreate {
-  title: string
-  description: string
+  title: string;
+  description: string;
 }

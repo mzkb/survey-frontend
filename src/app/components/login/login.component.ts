@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {LoginRequest} from "../login-request";
-import {LoginService} from "../login.service";
+import {LoginRequest} from "../../models/login-request";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
 
@@ -20,9 +19,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loginService.login(this.loginRequest);
-    this.goToSurveyList();
-
+    this.loginService.login(this.loginRequest).subscribe(
+      resp => {
+        this.loginService.setSession(resp);
+        this.goToSurveyList();
+      });
   }
 
   goToSurveyList() {

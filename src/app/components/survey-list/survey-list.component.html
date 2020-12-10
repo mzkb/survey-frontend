@@ -19,11 +19,17 @@
             <td>{{survey.uuid}}</td>
             <td>{{survey.title}}</td>
             <td>
-              <button class="btn btn-info" (click)="send(i, survey.uuid)">
+              <button class="btn btn-primary" (click)="send(i, survey.uuid)">
                 Send
               </button>
-              <button class="btn btn-success" (click)="update(i, survey.uuid)">
+              <button class="btn btn-secondary" (click)="take(i, survey.uuid)">
+                Take
+              </button>
+              <button class="btn btn-info" (click)="update(i, survey.uuid)">
                 Edit
+              </button>
+              <button class="btn btn-warning" (click)="response(i, survey.uuid)">
+                Responses
               </button>
               <button class="btn btn-danger" (click)="remove(i, survey.uuid)">
                 Delete

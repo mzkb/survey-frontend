@@ -1,62 +1,63 @@
 <div class="row">
   <div class="col-md-12">
+
     <div class="card my-5">
       <div class="card-body" *ngIf="surveyResponse">
         <h2 class="card-title py-3">Survey</h2>
-          <div class="form-group">
-            <p><span class="font-weight-bold">Title: </span><span class="font-italic">{{surveyResponse.title}}</span></p>
-          </div>
-          <div class="form-group">
-            <p><span class="font-weight-bold">Description: </span><span class="font-italic">{{surveyResponse.description}}</span></p>
-          </div>
+        <div class="form-group">
+          <p><span class="font-weight-bold">Title: </span>
+            <span class="font-italic">{{surveyResponse.title}}</span></p>
+        </div>
+        <div class="form-group">
+          <p><span class="font-weight-bold">Description: </span>
+            <span class="font-italic">{{surveyResponse.description}}</span></p>
+        </div>
       </div>
     </div>
+
     <div class="card my-5">
       <div class="card-body" *ngIf="surveyResponse">
-        <form (ngSubmit)="onSubmit()" #surveyResponseForm="ngForm">
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" #surveyResponseForm="ngForm">
           <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" [(ngModel)]="surveyTake.name"
+            <label>Name</label>
+            <input type="text"
                    class="form-control"
-                   id="name"
-                   name="name"
-                   placeholder="Enter your name"
-                   required #name="ngModel">
+                   formControlName="name">
           </div>
-          <div [hidden]="!name.pristine" class="alert alert-danger">Name is required</div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" [(ngModel)]="surveyTake.email"
-                   class="form-control"
-                   id="email"
-                   name="email"
-                   placeholder="Enter your email"
-                   required #email="ngModel">
-          </div>
-          <div [hidden]="!email.pristine" class="alert alert-danger">Email is required</div>
 
-          <div class="form-group" *ngFor="let question of surveyResponse.questions; let i = index">
-            <span [ngSwitch]="question.type">
-              <span *ngSwitchCase="'SHORT'">
-                <label for="question{{i}}">{{question.question}}</label>
-                <input type="text" [(ngModel)]="surveyTake.email"
-                       class="form-control"
-                       id="question{{i}}"
-                       name="question{{i}}"
-                       [attr.required]="question.required ? true: null" #question1="ngModel">
-                <div *ngIf="question.required" [hidden]="!question1.pristine" class="alert alert-danger">Is required</div>
-              </span>
-              <span *ngSwitchCase="'RADIO'">
-                <label for="question{{i}}">{{question.question}}</label>
-                <div class="form-check" *ngFor="let option of question.options[choices]; let j = index">
-                  <input class="form-check-input" type="radio" name="question{{i}}" id="question{{i}}-radio{{j}}" value="option1">
-                  <label class="form-check-label" for="question{{i}}">
-                    Default radio
-                  </label>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text"
+                   class="form-control"
+                   formControlName="email">
+          </div>
+
+          <span *ngFor="let data of formData; let i = index">
+            <span [ngSwitch]="data.type">
+
+              <span *ngSwitchCase="'text'">
+                <div class="form-group">
+                  <label>{{data.label}}</label>
+                  <input type="text"
+                         class="form-control"
+                         formControlName="{{data.label}}">
                 </div>
               </span>
+
+              <span *ngSwitchCase="'radio'">
+                <label>{{data.label}}</label>
+                <div class="form-check" *ngFor="let radio of data.options">
+                  <input type="radio"
+                         class="form-check-input"
+                         value="{{radio}}"
+                         formControlName="{{data.label}}">
+
+                  <label class="form-check-label">{{radio}}</label>
+                </div>
+              </span>
+
             </span>
-          </div>
+          </span>
 
           <button type="submit" [disabled]="!surveyResponseForm.form.valid" class="btn btn-info">Submit</button>
         </form>

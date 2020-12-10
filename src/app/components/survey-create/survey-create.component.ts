@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {SurveyCreate} from "../survey-create";
+import {SurveyCreate} from "../../models/survey-create";
 import {ActivatedRoute, Router} from "@angular/router";
-import {SurveyService} from "../survey.service";
+import {SurveyService} from "../../services/survey.service";
 
 @Component({
   selector: 'app-survey-create',
-  templateUrl: './survey-create.component.html',
-  styleUrls: ['./survey-create.component.css']
+  templateUrl: './survey-create.component.html'
 })
 export class SurveyCreateComponent implements OnInit {
 

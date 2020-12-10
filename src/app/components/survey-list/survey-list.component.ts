@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {SurveyService} from "../survey.service";
-import {SurveyResponse} from "../survey-response";
+import {SurveyService} from "../../services/survey.service";
+import {SurveyResponse} from "../../models/survey-response";
 
 @Component({
   selector: 'app-survey-list',
-  templateUrl: './survey-list.component.html',
-  styleUrls: ['./survey-list.component.css']
+  templateUrl: './survey-list.component.html'
 })
 export class SurveyListComponent implements OnInit {
 
@@ -29,8 +28,16 @@ export class SurveyListComponent implements OnInit {
     this.router.navigate(['publisher/survey/send/' + uuid]);
   }
 
+  take(index: number, uuid: string) {
+    this.router.navigate(['survey/' + uuid]);
+  }
+
   update(index: number, uuid: string) {
     this.router.navigate(['publisher/survey/' + uuid]);
+  }
+
+  response(index: number, uuid: string) {
+    this.router.navigate(['publisher/survey/response/' + uuid]);
   }
 
   remove(index: number, uuid: string) {

@@ -1,4 +1,4 @@
 export class LoginResponse {
-  jwt: string
-  expiry: string
+  jwt: string;
+  expiry: string;
 }

@@ -1,62 +1,117 @@
 <div class="row">
   <div class="col-md-12">
-    <div class="card my-5">
-      <div class="card-body" *ngIf="survey">
-        <h2 class="card-title py-3">Survey Details</h2>
-        <form (ngSubmit)="onSubmit()" #createSurveyForm="ngForm">
-          <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" [(ngModel)]="survey.title"
-                   class="form-control"
-                   id="title"
-                   name="title"
-                   placeholder="Enter a title"
-                   required #name="ngModel">
-          </div>
-          <div [hidden]="!name.pristine" class="alert alert-danger">Title is required</div>
-          <div class="form-group">
-            <label for="description">Description</label>
-            <textarea type="text" [(ngModel)]="survey.description"
-                      class="form-control"
-                      id="description"
-                      name="description"
-                      placeholder="Enter a description">
-            </textarea>
-          </div>
-          <button type="submit" [disabled]="!createSurveyForm.form.valid" class="btn btn-info">Update Survey</button>
-        </form>
+    <form (ngSubmit)="onSubmit()" #editSurveyForm="ngForm">
+
+      <div class="card my-5" *ngIf="surveyResponse">
+        <div class="card-body">
+          <h2 class="card-title py-3">Survey Details</h2>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" [(ngModel)]="survey.title"
+                     class="form-control"
+                     id="title"
+                     name="title">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea type="text" [(ngModel)]="survey.description"
+                        class="form-control"
+                        id="description"
+                        name="description">
+              </textarea>
+            </div>
+        </div>
       </div>
-    </div>
-    <div class="card my-5">
-      <div class="card-body">
-        <h2 class="card-title text-center py-3">Add Question</h2>
-        <form >
+
+      <div class="card my-5">
+        <div class="card-body">
+          <h2 class="card-title py-3">Add Question</h2>
           <div class="form-group">
-            <label for="question-type">Type</label>
-            <select id="question-type" name="questionType" class="form-control">
-              <option>Boolean</option>
-              <option>Dropdown</option>
-              <option>Checkbox</option>
-              <option>Multiple Choice</option>
-              <option>Short Answer</option>
-              <option>Long Answer</option>
-              <option>Date</option>
-              <option>Time</option>
+            <label for="question-type">Question Type</label>
+            <select class="form-control" id="question-type" (change)="onChange($event.target.value)">
+              <option></option>
+              <option>text</option>
+              <option>radio</option>
             </select>
           </div>
-          <button type="submit" class="btn btn-info">Add</button>
-        </form>
+        </div>
       </div>
-    </div>
-    <div class="card my-5" *ngFor="let question of questions; let i = index">
-      <div class="card-body">
-        <form >
-          <div class="form-group">
+
+      <div class="card my-5" *ngFor="let qd of questionsData; let i = index">
+        <div class="card-body">
+
+          <div [ngSwitch]="qd.type">
+            <div *ngSwitchCase="'text'">
+              <h2 class="card-title py-3">Text Question</h2>
+              <div class="form-group">
+                <label>Question</label>
+                <input type="text" class="form-control" name="question{{i}}" [(ngModel)]="qd.question">
+              </div>
+
+              <div class="form-group">
+                <label>Order</label>
+                <input type="text" class="form-control" name="order{{i}}" [(ngModel)]="qd.order">
+              </div>
+
+              <div class="form-group">
+                <label>Min Length</label>
+                <input type="text" class="form-control" name="minLength{{i}}" [(ngModel)]="qd.minLength">
+              </div>
+
+              <div class="form-group">
+                <label>Max Length</label>
+                <input type="text" class="form-control" name="maxLength{{i}}" [(ngModel)]="qd.maxLength">
+              </div>
+
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="required{{i}}" [(ngModel)]="qd.required">
+                <label class="form-check-label">Required</label>
+              </div>
+            </div>
+
+            <div *ngSwitchCase="'radio'">
+              <h2 class="card-title py-3">Radio Question</h2>
+              <div class="form-group">
+                <label>Question</label>
+                <input type="text" class="form-control" name="question{{i}}" [(ngModel)]="qd.question">
+              </div>
+
+              <div class="form-group">
+                <label>Order</label>
+                <input type="text" class="form-control" name="order{{i}}" [(ngModel)]="qd.order">
+              </div>
+
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="required{{i}}" [(ngModel)]="qd.required">
+                <label class="form-check-label">Required</label>
+              </div>
+
+              <button type="button" class="btn btn-info" (click)="addChoice(i)">+</button>
+
+              <div class="card my-5" *ngFor="let c of qd.choices; let j = index">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>Option</label>
+                    <input type="text" class="form-control" name="value{{j}}" [(ngModel)]="c.value">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Position</label>
+                    <input type="text" class="form-control" name="position{{j}}" [(ngModel)]="c.position">
+                  </div>
+                </div>
+              </div>
+
+            </div>
 
           </div>
-          <button type="submit" class="btn btn-info">Add</button>
-        </form>
+        </div>
       </div>
-    </div>
+
+      <div class="card-body">
+        <button type="submit" [disabled]="!editSurveyForm.form.valid" class="btn btn-info">Update Survey</button>
+      </div>
+
+    </form>
   </div>
 </div>

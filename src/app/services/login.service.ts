@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {LoginRequest} from "./login-request";
+import {LoginRequest} from "../models/login-request";
 import * as moment from "moment";
-import {LoginResponse} from "./login-response";
+import {LoginResponse} from "../models/login-response";
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +16,7 @@ export class LoginService {
   }
 
   public login(login: LoginRequest) {
-    return this.http.post<LoginResponse>(this.endpoint, login).subscribe(
-      resp => LoginService.setSession(resp)
-    );
+    return this.http.post<LoginResponse>(this.endpoint, login);
   }
 
   public logout() {
@@ -44,7 +42,7 @@ export class LoginService {
     return localStorage.getItem('jwt');
   }
 
-  private static setSession(loginResponse) {
+  public setSession(loginResponse) {
     console.log(loginResponse);
     const expiresAt = moment().add(loginResponse.expires, 'second');
 

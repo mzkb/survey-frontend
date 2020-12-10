@@ -1,8 +1,14 @@
-import {QuestionResponse} from "./question-response";
-
 export class UserSurveyResponse {
+  uuid: string;
   name: string;
   email: string;
+  title: string;
+  description: string;
+  responses: UserQuestionResponse[];
+}
+
+export class UserQuestionResponse {
   uuid: string;
-  questions: QuestionResponse[];
+  question: string;
+  response: string;
 }
